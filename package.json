@@ -1,0 +1,17 @@
+{
+  "name": "farmacia-api",
+  "version": "1.0.0",
+  "description": "API REST de una farmacia - demo didactico de Node.js + Express con persistencia en archivo JSON",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": ["nodejs", "express", "api-rest", "farmacia"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

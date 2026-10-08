@@ -1,0 +1,87 @@
+{
+  "categorias": [
+    {
+      "id": 1,
+      "nombre": "Analgesicos",
+      "descripcion": "Medicamentos para aliviar el dolor"
+    },
+    {
+      "id": 2,
+      "nombre": "Antibioticos",
+      "descripcion": "Combaten infecciones bacterianas"
+    },
+    {
+      "id": 3,
+      "nombre": "Vitaminas",
+      "descripcion": "Suplementos vitaminicos"
+    },
+    {
+      "id": 4,
+      "nombre": "Cuidado personal",
+      "descripcion": "Productos de higiene y cuidado"
+    }
+  ],
+  "productos": [
+    {
+      "id": 1,
+      "codigo": "MED-001",
+      "nombre": "Acetaminofen 500mg",
+      "categoriaId": 1,
+      "precio": 25.5,
+      "stock": 120,
+      "stockMinimo": 20,
+      "lote": "L-2024-A",
+      "fechaVencimiento": "2027-05-30",
+      "requiereReceta": false
+    },
+    {
+      "id": 2,
+      "codigo": "MED-002",
+      "nombre": "Ibuprofeno 400mg",
+      "categoriaId": 1,
+      "precio": 32,
+      "stock": 15,
+      "stockMinimo": 25,
+      "lote": "L-2024-B",
+      "fechaVencimiento": "2026-12-15",
+      "requiereReceta": false
+    },
+    {
+      "id": 3,
+      "codigo": "MED-003",
+      "nombre": "Amoxicilina 500mg",
+      "categoriaId": 2,
+      "precio": 89.9,
+      "stock": 40,
+      "stockMinimo": 10,
+      "lote": "L-2025-C",
+      "fechaVencimiento": "2026-11-20",
+      "requiereReceta": true
+    },
+    {
+      "id": 4,
+      "codigo": "VIT-001",
+      "nombre": "Vitamina C 1g",
+      "categoriaId": 3,
+      "precio": 45,
+      "stock": 80,
+      "stockMinimo": 15,
+      "lote": "L-2025-D",
+      "fechaVencimiento": "2028-01-10",
+      "requiereReceta": false
+    },
+    {
+      "id": 5,
+      "codigo": "CUI-001",
+      "nombre": "Alcohol en gel 250ml",
+      "categoriaId": 4,
+      "precio": 38.75,
+      "stock": 60,
+      "stockMinimo": 10,
+      "lote": "L-2025-E",
+      "fechaVencimiento": "2029-03-01",
+      "requiereReceta": false
+    }
+  ],
+  "ventas": []
+}
