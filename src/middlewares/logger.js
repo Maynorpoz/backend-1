@@ -10,6 +10,7 @@ export function logger(req, res, next) {
   // 'finish' es un evento del objeto respuesta: Node es orientado a eventos,
   // asi que nos suscribimos y reaccionamos cuando la respuesta ya se envio.
   res.on('finish', () => {
+    if (process.env.NODE_ENV === 'test') return;  // durante las pruebas no imprimimos
     const ms = Date.now() - inicio;
     console.log(`${req.method} ${req.originalUrl} -> ${res.statusCode} (${ms}ms)`);
   });

@@ -15,7 +15,13 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ARCHIVO = path.join(__dirname, '..', 'data', 'farmacia.json');
+
+// Por defecto se usa el archivo real. La variable de entorno FARMACIA_DB
+// permite apuntar a otro archivo: asi las pruebas trabajan sobre una copia
+// y nunca modifican los datos de la farmacia.
+const ARCHIVO = process.env.FARMACIA_DB
+  ? path.resolve(process.env.FARMACIA_DB)
+  : path.join(__dirname, '..', 'data', 'farmacia.json');
 
 // Cache en memoria de todo el "esquema" de la farmacia
 let datos = { categorias: [], productos: [], ventas: [] };
@@ -27,6 +33,7 @@ let escrituraEnCurso = Promise.resolve();
 export async function conectar() {
   const contenido = await readFile(ARCHIVO, 'utf8');
   datos = JSON.parse(contenido);
+  if (process.env.NODE_ENV === 'test') return;
   console.log(
     `[db] Datos cargados: ${datos.categorias.length} categorias, ` +
       `${datos.productos.length} productos, ${datos.ventas.length} ventas`

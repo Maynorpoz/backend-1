@@ -12,6 +12,7 @@ no en una base de datos, para que el foco quede en cómo funciona Node.js.
 npm install     # instala Express (única dependencia)
 npm start       # levanta el servidor en http://localhost:3000
 npm run dev     # igual, pero se reinicia solo al guardar cambios
+npm test        # ejecuta las 32 pruebas automatizadas
 ```
 
 Al abrir `http://localhost:3000/` la API devuelve su propia documentación en JSON.
@@ -129,6 +130,8 @@ Códigos usados: `200` OK · `201` creado · `400` datos inválidos · `404` no 
 backend/
 ├── server.js                  # Punto de entrada: carga datos y levanta el servidor
 ├── peticiones.http            # 21 peticiones listas para probar
+├── test/
+│   └── farmacia.test.js       # 32 pruebas automatizadas (node:test)
 ├── src/
 │   ├── app.js                 # Configuración de Express y cadena de middlewares
 │   ├── data/farmacia.json     # "Base de datos": categorías, productos y ventas
@@ -146,7 +149,42 @@ solo se reescribe `src/store/db.js`.
 
 ---
 
-## 5. Lo que este proyecto demuestra de Node.js
+## 5. Pruebas automatizadas
+
+```bash
+npm test
+```
+
+El proyecto incluye **32 pruebas** en `test/farmacia.test.js`, escritas con el
+ejecutor de pruebas que **ya trae Node.js** (`node:test`): no hace falta instalar
+Jest ni Mocha.
+
+Son pruebas **de punta a punta**: levantan el servidor real en un puerto libre y le
+hacen peticiones HTTP con `fetch`, igual que lo haría Postman. Para no alterar los
+datos reales, antes de empezar se copia `farmacia.json` a un archivo temporal y se
+le indica a la capa de datos que use esa copia mediante la variable de entorno
+`FARMACIA_DB`.
+
+Lo que se verifica:
+
+| Grupo | Casos cubiertos |
+|---|---|
+| Documentación y rutas | La raíz documenta la API; una ruta inexistente responde `404` en JSON |
+| Categorías | Listado con conteo, creación, nombre duplicado (`409`) y **no borrar una categoría con productos** |
+| Productos | Campos calculados, los 3 filtros, validación con `400`, categoría inexistente (`422`), código duplicado (`409`) y reabastecimiento |
+| Ventas | Cálculo del IVA, descuento de stock, alerta de stock mínimo, rechazo por falta de receta, por producto vencido y por stock insuficiente |
+
+La prueba más importante es **"TODO O NADA"**: envía una venta con dos productos,
+uno válido y otro vencido, y comprueba que tras el rechazo el producto válido
+**conserva su stock original**. Es la que demuestra que la validación ocurre antes
+de modificar el inventario.
+
+Otra prueba verifica que `/api/ventas/resumen` devuelva el reporte y no una venta,
+que es justamente el error que provoca declarar esa ruta después de `/:id`.
+
+---
+
+## 6. Lo que este proyecto demuestra de Node.js
 
 **1. El servidor es la propia aplicación.**
 Node no necesita Apache, IIS ni Tomcat. `app.listen(3000)` levanta el servidor HTTP
@@ -183,7 +221,7 @@ que aparece justamente por ser asíncrono.
 
 ---
 
-## 6. Prueba rápida con curl
+## 7. Prueba rápida con curl
 
 ```bash
 # Ver el inventario
