@@ -74,6 +74,33 @@ describe('Documentacion y rutas', () => {
     assert.ok(cuerpo.endpoints.productos);
   });
 
+  it('responde 400 si el cuerpo no viene como JSON (y no 500)', async () => {
+    // Es el error tipico de Postman cuando el Body se deja en "Text"
+    const respuesta = await fetch(base + '/api/ventas', {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ cliente: 'Maria Lopez', items: [] }),
+    });
+    assert.equal(respuesta.status, 400);
+  });
+
+  it('responde 400 si la peticion no trae cuerpo', async () => {
+    const { estado } = await pedir('POST', '/api/ventas');
+    assert.equal(estado, 400);
+  });
+
+  it('responde 400 si el JSON esta mal escrito', async () => {
+    const respuesta = await fetch(base + '/api/ventas', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: '{"cliente":"Maria",,}',
+    });
+    const cuerpo = await respuesta.json();
+
+    assert.equal(respuesta.status, 400);
+    assert.match(cuerpo.error, /no es un JSON valido/);
+  });
+
   it('una ruta inexistente responde 404 en JSON, no un error del servidor', async () => {
     const { estado, cuerpo } = await pedir('GET', '/api/doctores');
     assert.equal(estado, 404);

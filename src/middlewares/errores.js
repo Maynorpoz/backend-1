@@ -15,13 +15,29 @@ export function rutaNoEncontrada(req, res) {
  * siempre recibe un JSON consistente y nunca un stack trace.
  */
 export function manejadorErrores(err, req, res, next) {
-  const estado = err instanceof ErrorApi ? err.estado : 500;
+  let estado = 500;
+  let mensaje = 'Error interno del servidor';
 
+  if (err instanceof ErrorApi) {
+    // Error de negocio lanzado por nosotros desde un controlador
+    estado = err.estado;
+    mensaje = err.message;
+  } else if (err.type === 'entity.parse.failed') {
+    // express.json() no pudo leer el cuerpo: el cliente mando un JSON mal escrito
+    estado = 400;
+    mensaje = 'El cuerpo de la peticion no es un JSON valido';
+  } else if (err.status || err.statusCode) {
+    // Otros errores de Express que ya traen su propio codigo HTTP
+    estado = err.status || err.statusCode;
+    mensaje = err.message;
+  }
+
+  // Solo registramos en consola lo que de verdad es una falla nuestra
   if (estado === 500) console.error('[error]', err);
 
   res.status(estado).json({
     ok: false,
-    error: estado === 500 ? 'Error interno del servidor' : err.message,
+    error: mensaje,
     ...(err.detalles ? { detalles: err.detalles } : {}),
   });
 }

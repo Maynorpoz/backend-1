@@ -12,7 +12,7 @@ no en una base de datos, para que el foco quede en cómo funciona Node.js.
 npm install     # instala Express (única dependencia)
 npm start       # levanta el servidor en http://localhost:3000
 npm run dev     # igual, pero se reinicia solo al guardar cambios
-npm test        # ejecuta las 32 pruebas automatizadas
+npm test        # ejecuta las 35 pruebas automatizadas
 ```
 
 Al abrir `http://localhost:3000/` la API devuelve su propia documentación en JSON.
@@ -131,7 +131,7 @@ backend/
 ├── server.js                  # Punto de entrada: carga datos y levanta el servidor
 ├── peticiones.http            # 21 peticiones listas para probar
 ├── test/
-│   └── farmacia.test.js       # 32 pruebas automatizadas (node:test)
+│   └── farmacia.test.js       # 35 pruebas automatizadas (node:test)
 ├── src/
 │   ├── app.js                 # Configuración de Express y cadena de middlewares
 │   ├── data/farmacia.json     # "Base de datos": categorías, productos y ventas
@@ -155,7 +155,7 @@ solo se reescribe `src/store/db.js`.
 npm test
 ```
 
-El proyecto incluye **32 pruebas** en `test/farmacia.test.js`, escritas con el
+El proyecto incluye **35 pruebas** en `test/farmacia.test.js`, escritas con el
 ejecutor de pruebas que **ya trae Node.js** (`node:test`): no hace falta instalar
 Jest ni Mocha.
 

@@ -15,6 +15,16 @@ const app = express();
 
 // 1) Middlewares globales
 app.use(express.json());  // convierte el body JSON de la peticion en req.body
+
+// En Express 5, si la peticion no trae un JSON valido en el cuerpo (por ejemplo
+// viene vacia o sin el encabezado Content-Type), req.body queda en undefined.
+// Lo normalizamos a {} para que las validaciones respondan 400 explicando que
+// falta, en lugar de romperse con un error interno.
+app.use((req, res, next) => {
+  if (req.body === undefined) req.body = {};
+  next();
+});
+
 app.use(logger);          // nuestro registro de peticiones
 
 // 2) Ruta de bienvenida: documenta la API

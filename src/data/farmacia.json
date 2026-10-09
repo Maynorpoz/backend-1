@@ -28,7 +28,7 @@
       "nombre": "Acetaminofen 500mg",
       "categoriaId": 1,
       "precio": 25.5,
-      "stock": 120,
+      "stock": 118,
       "stockMinimo": 20,
       "lote": "L-2024-A",
       "fechaVencimiento": "2027-05-30",
@@ -52,7 +52,7 @@
       "nombre": "Amoxicilina 500mg",
       "categoriaId": 2,
       "precio": 89.9,
-      "stock": 40,
+      "stock": 39,
       "stockMinimo": 10,
       "lote": "L-2025-C",
       "fechaVencimiento": "2026-11-20",
@@ -83,5 +83,33 @@
       "requiereReceta": false
     }
   ],
-  "ventas": []
+  "ventas": [
+    {
+      "id": 1,
+      "fecha": "2026-10-08T08:02:28.787Z",
+      "cliente": "Maria Lopez",
+      "recetaMedica": "RM-4521",
+      "items": [
+        {
+          "productoId": 1,
+          "codigo": "MED-001",
+          "nombre": "Acetaminofen 500mg",
+          "cantidad": 2,
+          "precioUnitario": 25.5,
+          "subtotal": 51
+        },
+        {
+          "productoId": 3,
+          "codigo": "MED-003",
+          "nombre": "Amoxicilina 500mg",
+          "cantidad": 1,
+          "precioUnitario": 89.9,
+          "subtotal": 89.9
+        }
+      ],
+      "subtotal": 140.9,
+      "impuesto": 16.91,
+      "total": 157.81
+    }
+  ]
 }
